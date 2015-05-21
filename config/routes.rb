@@ -1,4 +1,23 @@
 Rails.application.routes.draw do
+  root 'movies#index'
+
+  # Routes for the Comment resource:
+  # CREATE
+  get "/comments/new", :controller => "comments", :action => "new"
+  post "/create_comment", :controller => "comments", :action => "create"
+
+  # READ
+  get "/comments", :controller => "comments", :action => "index"
+  get "/comments/:id", :controller => "comments", :action => "show"
+
+  # UPDATE
+  get "/comments/:id/edit", :controller => "comments", :action => "edit"
+  post "/update_comment/:id", :controller => "comments", :action => "update"
+
+  # DELETE
+  get "/delete_comment/:id", :controller => "comments", :action => "destroy"
+  #------------------------------
+
   # Routes for the Director resource:
   # CREATE
   get "/directors/new", :controller => "directors", :action => "new"

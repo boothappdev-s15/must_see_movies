@@ -4,25 +4,20 @@
   <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Director #<%= @director.id %></h3>
+        <h3 class="panel-title"><%= @director.name %></h3>
       </div>
       <div class="panel-body">
         <div class="row">
           <div class="col-md-12">
+            <img src="<%= @director.image_url %>" class="thumbnail center-block">
             <dl class="dl-horizontal">
-              <dt>Image url</dt>
-              <dd><%= @director.image_url %></dd>
-
-              <dt>Bio</dt>
-              <dd><%= truncate(@director.bio) %></dd>
-
               <dt>Dob</dt>
               <dd><%= @director.dob %></dd>
 
-              <dt>Name</dt>
-              <dd><%= @director.name %></dd>
-
+              <dt>Bio</dt>
+              <dd><%= truncate(@director.bio, :length => 255) %></dd>
             </dl>
+
             <div class="btn-group btn-group-justified">
               <a href="/directors" class="btn btn-primary">
                 <i class="fa fa-chevron-left"></i>
@@ -39,12 +34,75 @@
           </div>
         </div>
       </div>
+      <!-- This goes below div.panel-body -->
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-success">
+          Filmography
+        </li>
+        <% @director.movies.each do |movie| %>
+          <li class="list-group-item">
+            <a href="/movies/<%= movie.id %>">
+              <%= movie.title %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
 
       <ul class="list-group">
-        <li class="list-group-item">Filmography</li>
-        <% @director.movies.each do |movie| %>
-          <li class="list-group-item"><%= movie.title %></li>
+        <li class="list-group-item list-group-item-info">
+          Comments
+        </li>
+        <% @director.comments.each do |comment| %>
+          <li class="list-group-item">
+            <%= comment.content %>
+          </li>
         <% end %>
+        <li class="list-group-item">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Add Comment</h3>
+            </div>
+            <div class="panel-body">
+              <% @comment = Comment.new %>
+
+              <% if @comment.errors.any? %>
+                <% @comment.errors.full_messages.each do |message| %>
+                  <div class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <%= message %>
+                  </div>
+                <% end %>
+              <% end %>
+
+              <form action="/create_comment" method="post" class="form-horizontal">
+                <!-- Hidden input for authenticity token to protect from forgery -->
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+                <input name="director_id" type="hidden" value="<%= @director.id %>">
+
+                <!-- Label and input for content -->
+                <div class="form-group">
+                  <label for="content" class="col-sm-2 control-label">
+                    Content
+                  </label>
+                  <div class="col-sm-10">
+                    <input type="text" id="content" name="content" placeholder="Content" class="form-control" value="<%= @comment.content %>">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-success">
+                      Create Comment
+                    </button>
+                    or
+                    <a href="/comments">Cancel</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </li>
       </ul>
 
     </div>

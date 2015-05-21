@@ -4,24 +4,19 @@
   <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Actor #<%= @actor.id %></h3>
+        <h3 class="panel-title"><%= @actor.name %></h3>
       </div>
       <div class="panel-body">
         <div class="row">
           <div class="col-md-12">
+            <img src="<%= @actor.image_url %>" class="thumbnail center-block">
+
             <dl class="dl-horizontal">
-              <dt>Image url</dt>
-              <dd><%= @actor.image_url %></dd>
-
-              <dt>Bio</dt>
-              <dd><%= @actor.bio %></dd>
-
               <dt>Dob</dt>
               <dd><%= @actor.dob %></dd>
 
-              <dt>Name</dt>
-              <dd><%= @actor.name %></dd>
-
+              <dt>Bio</dt>
+              <dd><%= truncate(@actor.bio, :length => 255) %></dd>
             </dl>
             <div class="btn-group btn-group-justified">
               <a href="/actors" class="btn btn-primary">
@@ -39,6 +34,17 @@
           </div>
         </div>
       </div>
+
+      <ul class="list-group">
+      <% @actor.movies.each do |movie| %>
+        <li class="list-group-item">
+          <a href="/movies/<%= movie.id %>">
+            <%= movie.title %>
+          </a>
+        </li>
+      <% end %>
+      </ul>
+
     </div>
   </div>
 </div>
