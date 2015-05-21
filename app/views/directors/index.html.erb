@@ -24,18 +24,11 @@
       </div>
       <div class="panel-body">
         <dl>
-          <dt>Image url</dt>
-          <dd><%= director.image_url %></dd>
-
-          <dt>Bio</dt>
-          <dd><%= director.bio %></dd>
-
-          <dt>Dob</dt>
-          <dd><%= director.dob %></dd>
-
           <dt>Name</dt>
           <dd><%= director.name %></dd>
 
+          <dt></dt>
+          <dd><img src="<%= director.image_url %>" class="thumbnail center-block"></dd>
         </dl>
         <div class="btn-group btn-group-justified">
           <a href="/directors/<%= director.id %>" class="btn btn-primary">
