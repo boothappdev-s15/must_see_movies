@@ -14,7 +14,7 @@
               <dd><%= @director.image_url %></dd>
 
               <dt>Bio</dt>
-              <dd><%= @director.bio %></dd>
+              <dd><%= truncate(@director.bio) %></dd>
 
               <dt>Dob</dt>
               <dd><%= @director.dob %></dd>
@@ -39,6 +39,14 @@
           </div>
         </div>
       </div>
+
+      <ul class="list-group">
+        <li class="list-group-item">Filmography</li>
+        <% @director.movies.each do |movie| %>
+          <li class="list-group-item"><%= movie.title %></li>
+        <% end %>
+      </ul>
+
     </div>
   </div>
 </div>
