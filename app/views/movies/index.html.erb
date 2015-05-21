@@ -25,7 +25,7 @@
       <div class="panel-body">
         <dl>
           <dt>Director</dt>
-          <dd><%= Director.find_by({ :id => movie.director_id }).name %></dd>
+          <dd><%= movie.director.name %></dd>
 
           <dt>Image url</dt>
           <dd><img src="<%= movie.image_url %>"></dd>
